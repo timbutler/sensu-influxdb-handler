@@ -141,6 +141,9 @@ func sendMetrics(event *types.Event) error {
 		}
 		timestamp := time.Unix(t, 0)
 		tags := make(map[string]string)
+		for _, subs := range event.Check.Subscriptions {
+			tags["sub_"+subs] = "1"
+		}
 		tags["sensu_entity_id"] = event.Entity.ID
 		for _, tag := range point.Tags {
 			tags[tag.Name] = tag.Value
